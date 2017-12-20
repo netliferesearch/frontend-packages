@@ -184,6 +184,7 @@ storiesOf('Enkle komponenter', module)
         <FigureWithLicense
           noFigcaption
           type="small-left"
+          hideFigcaption
           caption="Du har en kjempegod idé til en kortfilm. Men det koster mange penger å produsere filmen.">
           <Image
             alt="Forstørrelsesglass"
