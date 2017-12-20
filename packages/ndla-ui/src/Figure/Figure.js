@@ -12,6 +12,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BEMHelper from 'react-bem-helper';
+import { Fullscreen } from 'ndla-icons/common';
 
 import LicenseByline from '../LicenseByline';
 import Button from '../button/Button';
@@ -57,23 +58,21 @@ export const Figure = ({
   id,
   children,
   captionView,
+  fullscreenView,
   type,
   resizeIframe,
+  noFigcaption,
   ...rest
 }) => {
   let typeClass = null;
   let content = null;
 
-  if (type !== 'full' && type !== 'full-column') {
-    typeClass = `u-float-${type}`;
-    content = (
-      <Button stripped className="u-fullw">
-        {children}
-      </Button>
-    );
-  } else {
-    content = children;
-  }
+  typeClass = `u-float-${type}`;
+  content = (
+    <Button stripped className="u-fullw">
+      {children}
+    </Button>
+  );
 
   const modifiers = [];
 
@@ -88,9 +87,15 @@ export const Figure = ({
   return (
     <figure
       id={id}
-      {...classes('', modifiers, typeClass)}
-      data-toggleclass={typeClass}
+      {...classes('', fullscreenView ? 'fs' : modifiers, typeClass)}
       {...rest}>
+      {noFigcaption ? (
+        <div 
+        {...classes('fullscreen-btn')}>
+          <Fullscreen />
+        </div>
+      ) : null}
+      {fullscreenView}
       {content}
       {captionView}
     </figure>
@@ -112,12 +117,14 @@ Figure.propTypes = {
   ]),
   resizeIframe: PropTypes.bool,
   captionView: PropTypes.node,
+  fullscreenView: PropTypes.node,
 };
 
 Figure.defaultProps = {
   type: 'full',
   resizeIframe: false,
   captionView: null,
+  fullscreenView: null,
 };
 
 export default Figure;
